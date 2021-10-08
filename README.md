@@ -24,7 +24,8 @@
 ## Uygulama Açıklaması
     
 Bu uygulama Veteriner Kliniklerinin yönetimi için tasarlandı. Kullanıcı kişiler müşteri, müşterilerin evcil hayvanları ve tedarikçilerini sisteme
-kaydederek belirli bir düzen oluşturabilirler.
+kaydederek belirli bir düzen oluşturabilirler. Formlarda bilgiler kaydedilirken kritik bölümlerde Validation kullanılmıştır. Örneğin Müşteri ismi, evcil hayvan
+ismi girilirken boş bırakılmayacağına yönelik uyarılar gelmektedir ve sistem bu koşullar altında kayıt yapmamaktadır.
 
 Her evcil hayvanın, müşterinin ve tedarikçinin profil sayfası mevcuttur.
 
