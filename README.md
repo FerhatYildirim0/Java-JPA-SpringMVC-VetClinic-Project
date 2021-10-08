@@ -30,6 +30,13 @@ ismi girilirken boş bırakılmayacağına yönelik uyarılar gelmektedir ve sis
 Uygulamayı kullanan kişiler için çeşitli roller vardır bunlar; USER, CUSTOMER, ADMIN VE SUPERADMIN.
 SUPERADMIN yetkisine sahip kişiler tüm işlemleri yapma imkanına sahiptir. CUSTOMER yetkisi ileride kullanılma ihtimaline yönelik eklenmiştir.
 
+| Web| Customer   | Admin | Super Admin |
+| ------------- |:-------------:|:-------------:|:-------------:|
+| Customer       |   |    |  X  |
+| Buying         |   | X  |  X  |
+| Sale           |   | X  |  X  |
+| Pet            |   |    |  X  |
+
 Her evcil hayvanın, müşterinin ve tedarikçinin profil sayfası mevcuttur.
 
 Ana Ekranda bulunan istatistikler bulunmaktadır.
@@ -40,7 +47,9 @@ Herhangi bir sayfaya kullanıcı girişi yapmadan erişim sağlanamaz.
 
 Not: Sistemi kullanabilmek için giriş yapmak gerekmektedir. Bu kullanıcı SUPERADMIN rolünde olup tüm yetkilere sahiptir.
 
-Kullanıcı Adı : ``` ferhat@mail.com``` Şifre : 12 
+| Kullanıcı Adı | Şifre   |Rol |
+| ------------- |:-------------:|:-------------:|
+|   ``` ferhat@mail.com```  | 12   | Super Admin  |
 
 ## Uygulama Görselleri
 
