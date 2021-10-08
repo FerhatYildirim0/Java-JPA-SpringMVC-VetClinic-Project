@@ -27,6 +27,9 @@ Bu uygulama Veteriner Kliniklerinin yönetimi için tasarlandı. Kullanıcı ki�
 kaydederek belirli bir düzen oluşturabilirler. Formlarda bilgiler kaydedilirken kritik bölümlerde Validation kullanılmıştır. Örneğin Müşteri ismi, evcil hayvan
 ismi girilirken boş bırakılmayacağına yönelik uyarılar gelmektedir ve sistem bu koşullar altında kayıt yapmamaktadır.
 
+Uygulamayı kullanan kişiler için çeşitli roller vardır bunlar; USER, CUSTOMER, ADMIN VE SUPERADMIN.
+SUPERADMIN yetkisine sahip kişiler tüm işlemleri yapma imkanına sahiptir. CUSTOMER yetkisi ileride kullanılma ihtimaline yönelik eklenmiştir.
+
 Her evcil hayvanın, müşterinin ve tedarikçinin profil sayfası mevcuttur.
 
 Ana Ekranda bulunan istatistikler bulunmaktadır.
@@ -34,7 +37,8 @@ Ana Ekranda bulunan istatistikler bulunmaktadır.
 Herhangi bir sayfaya kullanıcı girişi yapmadan erişim sağlanamaz.
 
 
-Not: Sistemi kullanabilmek için giriş yapmak gerekmektedir. Bu kullanıcı tüm yetkilere sahiptir.
+
+Not: Sistemi kullanabilmek için giriş yapmak gerekmektedir. Bu kullanıcı SUPERADMIN rolünde olup tüm yetkilere sahiptir.
 
 Kullanıcı Adı : ``` ferhat@mail.com``` Şifre : 12 
 
