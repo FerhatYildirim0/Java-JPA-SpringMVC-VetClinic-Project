@@ -1,0 +1,3 @@
+function cu_delete() {
+
+}  

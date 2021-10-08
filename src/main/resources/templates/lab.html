@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab</title>
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container mt-2">
+
+        <div class="row">
+            <div class="card cal-sm-6 mt-3">
+                <div class="card-title text-white">
+                    <button type="button" class="btn btn-sm btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#LabAddModal">
+                        <i class='bx bx-test-tube'></i> laboratuvar Sonucu Ekle
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="cal-sm-6 mt-2">
+                <div class="card">
+                    <div class="card-header bg-primary table-hover text-white">
+                        laboratuvar Somuçları
+                    </div>
+                    <div class="container">
+                        <div class="col-sm-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Başlık</th>
+                                    <th scope="col">Pet Profili Detay Görüntüle</th>
+                                    <th scope="col">Tarih</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr th:each="item, iter : ${lab}">
+                                    <th th:text="${item.lid}"></th>
+                                    <th th:text="${item.ltitle}"></th>
+                                    <td> <a th:href="@{'/petprofile/ppData/' + ${item.pid.pid}}" th:text="${item.pid.pname}"> </a></td>
+                                    <td th:text="${item.ldate}"></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--
+     Cure Add Modal Start
+-->
+    <form action="/lab/imageUpload" method="post" enctype="multipart/form-data" class="col-sm-4">
+        <div class="modal fade " id="LabAddModal" tabindex="-1" aria-labelledby="LabAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-l model-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="LabAddModalLabel"><i class='bx bx-test-tube'></i> Lab Sonuç</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                         <!--Modal-Structure-From-Start-->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="align-text-bottom">Laboratuvar Başlığı  </label>
+                                <input type="text" class="form-control mb-3" id="ltitle" name="ltitle" placeholder="">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label class="align-text-bottom mt-1"> Hayvan Adı - Müşteri</label>
+                                <select  id="pid" name="pid" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="0" selected></option>
+                                    <option th:each="item, iter : ${pet}" th:value="${item.pid}" th:text="${item.pname}  + ' / ' + ${item.cid.cname}" ></option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="formFile" class="form-label">Dosya Seçiniz</label>
+                                <input class="form-control" type="file" name="imageName" id="formFile">
+                            </div>
+
+                            <div class="col-sm-12">
+                                <label class="align-text-bottom mt-3"> Tedavi Açıklama</label>
+                                <textarea type="text" class="form-control mb-3" id="lcomment" name="lcomment" placeholder=""> </textarea>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                     <!--Modal-Structure-From-End-->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warming" data-bs-dismiss="modal">Kapat</button>
+                        <button type="submit" class="btn btn-success"> Sonucu Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<!--
+     Cure Add Modal End
+-->
+
+</th:block>
+
+</body>
+</html>

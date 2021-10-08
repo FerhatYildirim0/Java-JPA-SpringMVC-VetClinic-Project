@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Alış</title>
+</head>
+<body id="body-pd">
+<th:block layout:fragment="content">
+
+    <div class="container">
+        <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#kayitliTedarikcidenAlis">
+            Kayıtlı Tedarikçiden Alış
+        </button>
+
+        <div class="card mt-2">
+            <div class="card-header bg-primary table-hover text-white ">
+                Alışlar
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th colspan="1" scope="col">İşlemler</th>
+                                <th scope="col">BID</th>
+                                <th scope="col">Tarih <a href="#" class="button"><i class='bx bxs-chevron-up'></i></a>
+                                    <a href="#" class="button"><i class='bx bxs-chevron-down'></i></a></th>
+                                <th scope="col">Ürün İsmi</th>
+                                <th scope="col">Tedarikçi</th>
+                                <th scope="col">Ödeme Yöntemi</th>
+                                <th scope="col">Fiyat</th>
+                                <th scope="col">Miktar</th>
+                                <th scope="col">Birim</th>
+                                <th scope="col">KDV</th>
+                                <th scope="col">İndirim</th>
+                                <th scope="col">Tutar</th>
+                                <th scope="col">Note</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableRow">
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <label class="mt-2"><b>Fatura No:</b></label>
+                        <div class="col-sm-2">
+                            <input name="faturaNo" id="faturaNo" type="number" class="form-control">
+                        </div>
+                        <button onclick="bstatusChanger()" id="satisiTamamla" class="btn-sm btn-success "> Kaydet
+                        </button>
+                    </div>
+
+                    <div class="table-responsive mt-4">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th colspan="1" scope="col">İşlemler</th>
+                                <th scope="col">Tarih <a href="#" class="button"><i class='bx bxs-chevron-up'></i></a>
+                                    <a href="#" class="button"><i class='bx bxs-chevron-down'></i></a></th>
+                                <th scope="col">Fatura No</th>
+                                <th scope="col">Tedarikçi</th>
+                                <th scope="col">Ödeme Yöntemi</th>
+                                <th scope="col">Brüt</th>
+                                <th scope="col">Net</th>
+                                <th scope="col">KDV</th>
+                                <th scope="col">Ortalama İndirim</th>
+                                <th scope="col">Tutar</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableRowSum">
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="kayitliTedarikcidenAlis" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabe4l">Alış</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/buying/binsert" method="post" id="buyingInsert">
+
+                            <div>
+                                <label class="align-text-bottom mt-1"> Tedarikçi</label>
+                                <select id="tname" name="tname" class="form-select form-select-sm"
+                                        aria-label=".form-select-sm example">
+                                    <option th:each="item, iter : ${suppliersList}" th:value="${item.suid}"
+                                            th:text="${item.suname}"></option>
+                                </select>
+                            </div>
+
+                            <div class="mt-1">
+                                <label class="align-text-bottom mt-1"> Ürün / Aşı</label>
+                                <select id="pname" name="pname" class="form-select form-select-sm"
+                                        aria-label=".form-select-sm example">
+                                    <option th:each="item, iter : ${storageList}" th:if="${item.stvac} != null"
+                                            th:value="${item.stvac.vacid}" th:text="${item.stvac.vacname}"></option>
+                                    <option th:each="item, iter : ${storageList}" th:if="${item.stpro} != null"
+                                            th:value="${item.stpro.prid}" th:text="${item.stpro.prname}"></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3 mt-1">
+                                <label class="align-text-bottom mt-1"> Alış Notunu Giriniz</label>
+                                <textarea class="form-control" id="bnote" name="bnote" rows="3" ></textarea>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="col-sm-11 offset-md-1">
+                                        <label for="product_Price" class="form-label">Fiyatı</label>
+                                        <input name="product_Price" id="product_Price" type="number"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="col-sm-11 offset-md-1">
+                                        <label for="product_Amount" class="form-label">Miktar</label>
+                                        <input name="product_Amount" id="product_Amount" type="number"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="col-sm-11 offset-md-1">
+                                        <label for="proBirim" class="form-label">Birim</label>
+                                        <select class="form-select form-select-sm mt-1" name="proBirim" id="proBirim"
+                                                aria-label=".form-select-sm example">
+                                            <option selected>Seçiniz</option>
+                                            <option value="1">Mililitre</option>
+                                            <option value="2">g</option>
+                                            <option value="3">Kutu</option>
+                                            <option value="4">Adet</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="col-sm-11 offset-md-1">
+                                        <label for="taxType" class="form-label">KDV</label>
+                                        <select class="form-select form-select-sm mt-1" name="taxType" id="taxType"
+                                                aria-label=".form-select-sm example">
+                                            <option selected>%</option>
+                                            <option value="0">Dahil</option>
+                                            <option value="1">%1</option>
+                                            <option value="2">%8</option>
+                                            <option value="3">%18</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="col-sm-11 offset-md-1">
+                                        <label for="pdiscount" class="form-label">İndirim</label>
+                                        <input type="number" class="form-control" name="pdiscount" id="pdiscount"
+                                               placeholder="%">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="col-sm-11 offset-md-1">
+                                        <label for="purType" class="form-label">Ödeme Yöntemi</label>
+                                        <select class="form-select form-select-sm mt-1" name="purType" id="purType"
+                                                aria-label=".form-select-sm example">
+                                            <option value="1">Nakit</option>
+                                            <option value="2">Kredi Kartı</option>
+                                            <option value="3">Banka Havalesi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="col-sm-11 offset-md-1">
+                                        <label for="deleteButton" class="form-label">İşlem</label>
+                                        <button onclick="modalReset()" type="reset" id="deleteButton"
+                                                class="btn btn-info btn-sm mt-1">Temizle
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-sm-10">
+                                </div>
+                                <div class="d-grid gap-2 mt-1 d-md-flex justify-content-md-end">
+                                    <button type="button" class="btn-sm btn-danger mt-2" data-bs-dismiss="modal">
+                                        <i class="fa fa-align-right" aria-hidden="true"></i>Kapat
+                                    </button>
+                                    <button type="submit" data-bs-dismiss="modal" class="btn-sm btn-success mt-2">
+                                        Kaydet
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="modal fade" id="yeniTedarikcidenAlis" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Yeni Tedarikçi Ekle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/buying/supp" method="post" id="buying">
+                            <div class="mb-3">
+                                <label for="tname" class="form-label">Tedarikçi Adı</label>
+                                <div class="search"><input name="sname" id="sname" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="semail" class="form-label">Tedarikçi Email Adresi</label>
+                                <input type="email" class="form-control" id="semail" name="semail">
+                            </div>
+                            <div class="mb-3 mt-3">
+                                <label for="telefon" class="form-label">Tedarikçi Telefon</label>
+                                <input name="telefon" id="telefon" type="text" class="form-control">
+                            </div>
+
+                            <div class="row">
+
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="button" class="btn-sm btn-danger mt-2" data-bs-dismiss="modal">
+                                        <i class="fa fa-align-right" aria-hidden="true"></i>Kapat
+                                    </button>
+                                    <button type="submit" data-bs-dismiss="modal" class="btn-sm btn-success mt-2">
+                                        Kaydet
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="buyingdetail" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleMod2">Detay</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+
+                                    <th scope="col">BID</th>
+                                    <th scope="col">Tarih</th>
+                                    <th scope="col">Ürün İsmi</th>
+                                    <th scope="col">Tedarikçi Id</th>
+                                    <th scope="col">Ödeme Yöntemi</th>
+                                    <th scope="col">Fiyat</th>
+                                    <th scope="col">Miktar</th>
+                                    <th scope="col">Birim</th>
+                                    <th scope="col">KDV</th>
+                                    <th scope="col">İndirim</th>
+                                    <th scope="col">Tutar</th>
+                                    <th scope="col">Note</th>
+                                </tr>
+                                </thead>
+                                <tbody id="detailRow">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/sitejs/buying.js}"></script>
+</th:block>
+
+
+</body>
+</html>

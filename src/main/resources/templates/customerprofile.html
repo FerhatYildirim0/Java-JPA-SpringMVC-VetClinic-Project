@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container">
+        <div class="row">
+            <div class="card col-sm-4 mt-2">
+                <h5 class="card-title mt-2 "><b>Müşteri Bilgileri</b></h5>
+                <ul  class="list-group list-group-flush">
+                    <label>Adı Soyadı</label>
+                    <li class="list-group-item" th:text="${cust.cname} + ${cust.csurname}">alper@mail</li>
+                    <label class="align-text-bottom" >Müşteri Toplam Borç</label>
+                    <li class="text-center text-danger" th:text="${cust.getCdebpt()}+' ₺'"></li>
+                    <button type="button" class="btn btn-sm btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#PayDebt"><i class="fas fa-money-bill-wave"></i> Ödeme Gir </button>
+                    <li class="list-group-item"></li>
+                    <label>E-Mail</label>
+                    <li class="list-group-item" th:text="${cust.cmail}">alper@mail</li>
+                    <label class="align-text-bottom" >Telefon No</label>
+                    <li class="list-group-item" th:text="${cust.ctel}">2442141241</li>
+                    <label class="align-text-bottom" >TC No</label>
+                    <li class="list-group-item" th:text="${cust.ccitizenship}">3333333</li>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+                        <button th:href="@{'/customerprofile/cProfile/'+ ${cust.cid}}" data-bs-toggle="modal" data-bs-target="#PetAddModal"  type="button" class="btn-sm btn-warning mt-2" data-bs-dismiss="modal">Düzenle</button>
+                        <a th:href="@{'/customerprofile/cDelete/'+ ${cust.cid}} " type="button" class="btn-sm btn-danger mt-2">Sil</a>
+                    </div>
+
+
+                </ul>
+            </div>
+
+            <div class=" card col-sm-7 offset-md-1 mt-2">
+                <div class="card-title">
+                    <h5 class="card-title align-middle mt-2"><b>Hastaları</b></h5>
+                </div>
+                <div class="col-sm-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Pet Adı</th>
+                            <th scope="col">Doğum Tarihi</th>
+                            <th scope="col">Pet Chip </th>
+                            <th scope="col">Profile Git</th>
+                            <th scope="col">Sil</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="item, iter : ${petls}">
+                            <th th:text="${item.pname}"></th>
+                            <td th:text="${item.pbirthday}"></td>
+                            <td th:text="${item.pchip}"></td>
+
+                            <td> <a th:href="@{'/petprofile/ppData/' + ${item.pid}}" class="btn btn-primary btn-sm">Pet Profili</a> </td>
+                            <td> <a th:href="@{'/customerprofile/petDel/' + ${item.pid}}" class="btn btn-danger btn-sm">Sil</a> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supplier Debt -->
+    <form  action="/customerprofile/debt" method="post"  id="form_modal_send_1">
+        <div class="modal fade" id="PayDebt" tabindex="-1" aria-labelledby="PayDebtLabel" aria-hidden="true">
+            <div class="modal-dialog model-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="PayDebtLabel"> Yapılan Ödeme Miktarı <i class="text-primary" th:text="${cust.cname}"></i></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Modal-Structure-From-Start -->
+
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                <label class="align-text-bottom">Güncel Borç</label>
+                                <i class="text-warning text-end" th:text="${cust.cdebpt}"></i>
+                            </div>
+                            <div>
+                                <label for="cdebpt" class="align-baseline mt-1">Miktar</label>
+                                <input id="cdebpt" name="cdebpt" class="form-control form-control-sm mt-1 textarea" type="text"
+                                       aria-label=".form-control-sm example"></input>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Modal-Structure-From-End -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">KAPAT</button>
+                        <button type="submit" class="btn btn-success">Ekle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--Supplier Debt Modal End-->
+
+
+
+    <div class="modal fade " id="PetAddModal" tabindex="-1" aria-labelledby="ProductAddModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl model-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ProductAddModalLabel"> <i class='bx bxs-box' ></i> Ürün Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/customerprofile/uProfile" th:object="${customer}">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="cname" class="align-baseline">Hasta Sahibi Adı</label>
+                                <input id="cname"   name="cname" class="form-control form-control-sm mt-1" type="text"
+                                       aria-label=".form-control-sm example" th:value="${cust.cname}">
+                                <div style="color: red" th:if="${ #fields.hasErrors('cname') }" th:errors="*{cname}" ></div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="csurname" class="align-baseline mt-1">Hasta Sahibi Soyadı</label>
+                                <input id="csurname" name="csurname" class="form-control form-control-sm mt-1" type="text"
+                                       aria-label=".form-control-sm example" th:value="${cust.csurname}">
+                                <div style="color: red" th:if="${ #fields.hasErrors('csurname') }" th:errors="*{csurname}" ></div>
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="ctel" class="align-baseline mt-1">Telefon Numarası</label>
+                                <input id="ctel" name="ctel" class="form-control form-control-sm mt-1" type="tel"
+                                       aria-label=".form-control-sm example" th:value="${cust.ctel}" >
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="ctel_2" class="align-baseline mt-1">Telefon Numarası 2</label>
+                                <input id="ctel_2" name="ctel_2" class="form-control form-control-sm mt-1" type="tel"
+                                       aria-label=".form-control-sm example" th:value="${cust.ctel_2}">
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="cmail" class="align-baseline mt-1">E-Mail</label>
+                                <input id="cmail" name="cmail" class="form-control form-control-sm mt-1" type="email"
+                                       aria-label=".form-control-sm example" th:value="${cust.cmail}">
+                                <div style="color: red" th:if="${ #fields.hasErrors('cmail') }" th:errors="*{cmail}" ></div>
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="ctax_office" class="align-baseline mt-1">Vergi Dairesi Adı</label>
+                                <input id="ctax_office" name="ctax_office" class="form-control form-control-sm mt-1" type="text"
+                                       aria-label=".form-control-sm example" th:value="${cust.ctax_office}">
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="cnote" class="align-baseline mt-1">Not</label>
+                                <input id="cnote" name="cnote" class="form-control form-control-sm mt-1" type="text"
+                                       aria-label=".form-control-sm example" th:value="${cust.cnote}">
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="ccitizenship" class="align-baseline mt-1">VN/TC Numarası</label>
+                                <input id="ccitizenship" name="ccitizenship" class="form-control form-control-sm mt-1" type="number"
+                                       aria-label=".form-control-sm example" th:value="${cust.ccitizenship}">
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="basic-addon1" class="align-baseline mt-1">İndirim Oranı</label>
+                                <div class="input-group">
+
+                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                    <input type="number" id="cdiscount" name="cdiscount" class="form-control" placeholder="İndirim Oranı"
+                                           aria-label="Username" aria-describedby="basic-addon1" th:value="${cust.cdiscount}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="ccity" class="align-baseline mt-1">İl</label>
+                                <input id="ccity" name="ccity" class="form-control form-control-sm mt-1" type="text"
+                                       aria-label=".form-control-sm example" th:value="${cust.ccity}">
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="ctown" class="align-baseline mt-1">İlçe</label>
+                                <input id="ctown" name="ctown" class="form-control form-control-sm mt-1" type="text"
+                                       aria-label=".form-control-sm example" th:value="${cust.ctown}">
+                            </div>
+                            <div class="col-sm-6 mt-2">
+                                <label for="caddress" class="align-baseline mt-1">Adresi</label>
+                                <textarea id="caddress" name="caddress" class="form-control form-control-sm mt-1 textarea" type="text"
+                                          aria-label=".form-control-sm example" th:field="${cust.caddress}"></textarea>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                            <button  type="submit" class="btn btn-primary">Müşteri Ekle/Düzenle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

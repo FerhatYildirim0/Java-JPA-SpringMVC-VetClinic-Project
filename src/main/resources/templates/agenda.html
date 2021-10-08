@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajanda</title>
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container mt-2">
+
+        <div class="row">
+                <div class="card col-sm-4 mt-2">
+                <h5 class="card-title mt-2 text-primary" th:if="${ag} != null" th:text="${ag.agtitle}">Not</h5>
+                    <h5 class="card-title mt-2 text-primary"><i class="fas fa-calendar-day"></i> NOT</h5>
+                    <ul class="list-group list-group-flush">
+                        <form  method="post" action="/agenda/add"  id="form_modal_send">
+                    <div class="row">
+                        <div>
+                            <label for="agtitle" class="align-baseline"> Başlık</label>
+                            <input th:if="${ag} != null" th:value="${ag.agtitle}" id="agtitle" name="agtitle" class="form-control form-control-sm mt-1 textarea" type="text"
+                                   aria-label=".form-control-sm example"></input>
+                        </div>
+
+                        <div class="mt-2">
+                            <label for="agdate" class="align-baseline mt-1">Tarih</label>
+                            <input th:if="${ag} != null" th:value="${ag.agdate}" id="agdate" name="agdate" class="form-control form-control-sm mt-1 textarea" type="date"
+                                   aria-label=".form-control-sm example"></input>
+                        </div>
+
+                        <div class="mt-2">
+                            <label for="agtime" class="align-baseline mt-1">Saat</label>
+                            <input th:if="${ag} != null" th:value="${ag.agtime}" id="agtime" name="agtime" class="form-control form-control-sm mt-1 textarea" type="time"
+                                   aria-label=".form-control-sm example"></input>
+                        </div>
+
+                        <div class="mt-2">
+                            <label for="agtext" class="align-baseline mt-1">Açıklama</label>
+                            <textarea th:if="${ag} != null" th:field="${ag.agtext}" id="agtext" name="agtext" value="0" class="form-control form-control-sm mt-1 textarea" type="text"
+                                   aria-label=".form-control-sm example"></textarea>
+                        </div>
+
+                        <div class="mt-2 mb-2">
+                            <button type="submit" class="btn btn-success">EKLE</button>
+                        </div>
+                    </div>
+                        </form>
+
+                    </ul>
+                </div>
+
+            <div class=" col-sm-7 offset-md-1 mt-2">
+                <div class="row">
+                    <div class="card-header bg-primary table-hover text-white">
+                        Notlarım
+                    </div>
+                    <div class="card col-sm-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-center" scope="col">Başlık</th>
+                                <th class="text-center" scope="col">Tarih</th>
+                                <th class="text-center" scope="col">Saat</th>
+                                <th class="text-center" scope="col">Silme</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr th:each="item, iter : ${agendaList}">
+                                    <td class="text-center"><a th:href="@{'/agenda/'+ ${item.agid}}" th:text="${item.agtitle}"> </a></td>
+                                    <td class="text-center" th:text="${item.agdate}"></td>
+                                    <td class="text-center" th:text="${item.agtime}"></td>
+                                    <td class="text-center"><a th:href="@{'/agenda/delete/'+ ${item.agid}}" class="btn btn-danger btn-sm"><i class='bx bx-minus-circle'></i> Sil</a> </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+</body>
+</html>

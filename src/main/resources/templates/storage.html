@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Depo</title>
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container mt-2">
+
+        <div class="row">
+            <div class="card cal-sm-6 mt-2">
+                <div class="card-title text-white">
+                    <a th:href="@{'/vaccine'}" type="button" class="btn btn-sm btn-primary mt-2">
+                        <i class="fas fa-syringe"></i> Aşılar Listesi </a>
+                    <a th:href="@{'/product'}" type="button" class="btn btn-sm btn-info mt-2">
+                        <i class="fas fa-capsules"></i> Ürünler Listesi </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class=" class col-sm-5 mt-2">
+                <div class="card-header bg-success table-hover text-white">
+                    Depoda Bulunan Ürünler
+                </div>
+            <div class="card col-sm-12">
+                <table class="table ">
+                    <thead>
+                    <tr>
+                        <th class="text-center" scope="col">Tür</th>
+                        <th class="text-center" scope="col">Adı</th>
+                        <th class="text-center" scope="col">Ürün Kodu</th>
+                        <th class="text-center" scope="col">Güncel Stok</th>
+                        <th class="text-center" scope="col">Stok Maliyeti</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="item, iter : ${storage}">
+                        <th class="text-center" th:if="${item.stvac != null}"><i class="fas text-danger fa-syringe"></i></th>
+                        <th class="text-center" th:if="${item.stpro != null}"><i class="fas text-info fa-capsules"></i></th>
+                        <th class="text-center" th:if="${item.stvac != null}" > <a th:if="${item.stvac != null}" th:href="@{'vaccine-profile/' + ${item.stvac.vacid}}" th:text="${item.stvac.vacname}"> </a> </th>
+                        <th class="text-center" th:if="${item.stpro != null}"> <a th:if="${item.stpro != null}" th:href="@{'product-profile/' + ${item.stpro.prid}}" th:text="${item.stpro.prname}"> </a></th>
+                        <th class="text-center" th:if="${item.stvac != null}" th:text="${item.stvac.vaccode}"></th>
+                        <th class="text-center" th:if="${item.stpro != null}" th:text="${item.stpro.prcode}"></th>
+                        <th class="text-center" th:if="${item.stvac != null}" th:text="${item.stvac.vacstock}"></th>
+                        <th class="text-center" th:if="${item.stpro != null}" th:text="${item.stpro.prstock}"></th>
+                        <th class="text-center text-danger" th:if="${item.stvac != null}" th:text="${item.stvac.vacstock} * ${item.stvac.vacbuying} + ' ₺'"></th>
+                        <th class="text-center text-danger" th:if="${item.stpro != null}" th:text="${item.stpro.prstock} * ${item.stpro.prbuying} + ' ₺'"></th>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <div class="offset-md-1 col-sm-6 mt-2">
+            <div class="card-header bg-warning table-hover text-white">
+                Son Depo Hareketleri (10)
+            </div>
+                <div class="card col-sm-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Tür</th>
+                        <th scope="col">Ürün Adı</th>
+                        <th scope="col">Yapılan İşlem</th>
+                        <th scope="col">İşlem Adeti</th>
+                        <th scope="col">Kalan Stok</th>
+                        <th scope="col">Tarih / Saat</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="item, iter : ${storageList}">
+                        <th th:if="${item.stvac != null}"><i class="fas text-danger fa-syringe"></i></th>
+                        <th th:if="${item.stpro != null}"><i class="fas text-info fa-capsules"></i></th>
+                        <th th:if="${item.stvac != null}" > <a th:if="${item.stvac != null}" th:href="@{'vaccine-profile/' + ${item.stvac.vacid}}" th:text="${item.stvac.vacname}"> </a> </th>
+                        <th th:if="${item.stpro != null}"> <a th:if="${item.stpro != null}" th:href="@{'product-profile/' + ${item.stpro.prid}}" th:text="${item.stpro.prname}"> </a></th>
+                        <th class="text-success"  th:if="${item.staction == 1}">Ekleme</th>
+                        <th class="text-warning" th:if="${item.staction == 2}">Güncelleme</th>
+                        <th class="text-danger" th:if="${item.staction == 3}">Satış</th>
+                        <th th:text="${item.stchangeamount}"></th>
+                        <td th:text="${item.stlastamount}"></td>
+                        <td th:text="${item.stdate}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+    </div>
+
+</th:block>
+
+</body>
+</html>

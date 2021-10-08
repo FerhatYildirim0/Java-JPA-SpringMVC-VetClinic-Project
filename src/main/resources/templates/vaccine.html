@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Aşı Ekle</title>
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container mt-2">
+
+        <div class="row">
+            <div class="card cal-sm-6 mt-3">
+                <div class="card-title text-white">
+                    <button type="button" class="btn btn-sm btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#VaccineAddModal">
+                        <i class="fas fa-syringe"></i> Aşı Tanımla
+                    </button>
+                    <a th:href="@{'/storage'}" type="button" class="btn btn-sm btn-info mt-2">
+                        <i class="fas fa-boxes"></i> Depo Stok & Stok Hareketlerini Görüntüle </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="cal-sm-6 mt-2">
+                <div class="card">
+                    <div class="card-header bg-primary table-hover text-white">
+                        Ürünler
+                    </div>
+                    <div class="container">
+
+                        <div class="col-sm-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Aşı Id</th>
+                                    <th scope="col">Aşı Adı</th>
+                                    <th scope="col">Aşı Türü</th>
+                                    <th scope="col">Alış Fiyatı</th>
+                                    <th scope="col">Satış Fiyatı</th>
+                                    <th scope="col">Stok</th>
+                                    <th scope="col">Aktiflik</th>
+                                    <th scope="col">Yönetim</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr th:each="item, iter : ${ls}">
+                                    <th th:text="${item.vacid}"></th>
+                                    <td> <a th:href="@{'vaccine-profile/' + ${item.vacid}}" th:text="${item.vacname}"> </a></td>
+                                    <td th:text="${item.vactype}"></td>
+                                    <td th:text="${item.vacbuying}"></td>
+                                    <td th:text="${item.vacsales}"></td>
+                                    <td th:text="${item.vacstock}"></td>
+                                    <td th:text="${item.vacactive}"></td>
+                                    <td> <a th:href="@{'vaccine/vacdelete/' + ${item.vacid}}" class="btn btn-danger btn-sm"><i class='bx bx-minus-circle'></i> Sil</a>
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Product Add Modal Start -->
+    <form method="post" action="/vaccine/add" id="form_modal_send">
+        <div class="modal fade " id="VaccineAddModal" tabindex="-1" aria-labelledby="VaccineAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl model-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="VaccineAddModalLabel"><i class="fas fa-syringe"></i> Aşı Tanımla</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Modal-Structure-From-Start -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="align-text-bottom">Aşı Adı:  </label>
+                                <input type="text" class="form-control mb-3" id="vacname" name="vacname" placeholder="">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class=" align-text-bottom"> Aşı Birimi</label>
+                                <select id="vacunit" name="vacunit" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option selected>Birim Seçiniz</option>
+                                    <option value="1">Adet</option>
+                                    <option value="2">Kilogram</option>
+                                    <option value="3">ml</option>
+                                    <option value="4">mg</option>
+                                    <option value="5">Kutu</option>
+                                    <option value="6">Torba</option>
+                                    <option value="7">Şişe</option>
+                                    <option value="8">Tablet</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom"> Ürün Tipi</label>
+                                <select id="vactype" name="vactype" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="1">PET Aşı</option>
+                                    <option value="2">Çiftlik Aşı</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom"> Kategori</label>
+                                <select id="vaccategory" name="vaccategory" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option selected>Kategori Seçiniz</option>
+                                    <option value="1">İlaç</option>
+                                    <option value="2">Serum</option>
+                                    <option value="3">Hijyen</option>
+                                    <option value="4">Kozmetik</option>
+                                    <option value="4">Yiyecek</option>
+                                    <option value="5">Diğer</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-3"> Tedarikçi</label>
+                                <select id="vacsupplier" name="vacsupplier" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option th:each="item, iter : ${suppliersList}" th:value="${item.suid}" th:text="${item.suname}" ></option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-3"> Ürün Barkodu</label>
+                                <input type="text" class="form-control" id="vacbarcode" name="vacbarcode" placeholder="">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-3"> Ürün Kodu</label>
+                                <input type="text" class="form-control" id="vaccode" name="vaccode" placeholder="">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-3"> Ürün Alış Fiyatı</label>
+                                <input type="number" class="form-control" id="vacbuying" name="vacbuying" placeholder="">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-3"> Ürün Satış Fiyatı</label>
+                                <input type="number" class="form-control mb-3" id="vacsales" name="vacsales" placeholder="">
+                            </div>
+
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-3"> KDV %</label>
+                                <select id="vactax" name="vactax" class="form-select form-select" aria-label=".form-select-sm example">
+                                    <option selected>Vergi Oranını Seçiniz</option>
+                                    <option value="1">%1</option>
+                                    <option value="2">%8</option>
+                                    <option value="3">%18</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom"> Ürün Satış Fiyatına KDV Dahil Mi?</label>
+                                <select id="vactaxincluded" name="vactaxincluded" class="form-select form-select" aria-label=".form-select-sm example">
+                                    <option value="1">KDV Dahil</option>
+                                    <option value="2">KDV Dahil Değil</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom"> Kritik Stok Miktarı</label>
+                                <input id="vacstock" name="vacstock" type="number" class="form-control">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom"> Aktif</label>
+                                <select id="vacactive" name="vacactive" class="form-select form-select" aria-label=".form-select-sm example">
+                                    <option value="1">Aktif</option>
+                                    <option value="2">Aktif Değil </option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-3"> Tür</label>
+                                <select id="vacpettype" name="vacpettype" class="form-select form-select" aria-label=".form-select-sm example">
+                                    <option value="1">Köpek</option>
+                                    <option value="2">Kedi</option>
+                                    <option value="2">Büyükbaş</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-3"> Tekrar Sayısı</label>
+                                <input type="text" class="form-control mb-3" id="vacrepeat" name="vacrepeat" placeholder="">
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <!-- Modal-Structure-From-End -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                        <button type="submit" class="btn btn-primary">Ürünü Ekle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Product Add Modal End -->
+
+
+</th:block>
+
+</body>
+</html>

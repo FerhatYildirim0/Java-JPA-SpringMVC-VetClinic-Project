@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/sitecss/site.css}">
+  <link rel="stylesheet" th:href="@{/sitecss/card.css}">
+  <link rel="stylesheet" th:href="@{/sitecss/sidebar.css}">
+  <link rel="stylesheet" th:href="@{/sitecss/topbtn.css}">
+  <link rel="stylesheet" th:href="@{/boxicons-2.0.9/css/boxicons.min.css}">
+  <link rel="stylesheet" th:href="@{/fontawesome/css/all.css}">
+  <link rel="stylesheet" th:href="@{/fontawesome/css/brands.css}">
+
+</head>
+
+<body>
+<div class="container">
+
+  <th:block th:replace="inc/header :: header"></th:block>
+  <th:block th:replace="inc/bar :: bar"></th:block>
+  <th:block layout:fragment="content"></th:block>
+  <th:block th:replace="inc/footer :: footer"></th:block>
+
+</div>
+
+<!-- Bootstrap JavaScript Libraries -->
+
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/fontawesome/js/all.js}"></script>
+<script th:src="@{/sitejs/sidebar.js}"></script>
+<script th:src="@{/sitejs/home.js}"></script>
+<script th:src="@{/sitejs/customer.js}"></script>
+</body>
+
+</html>

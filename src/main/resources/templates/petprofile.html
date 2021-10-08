@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container">
+
+        <div class="row">
+            <div class="card cal-sm-6 mt-2">
+                <div class="card-title text-white">
+                    <a th:href="@{'/customer-list/list'}" type="button" class="btn btn-sm btn-primary mt-2">
+                        <i class="fas fa-list-ul"></i> Tüm Müşteriler </a>
+                    <a th:href="@{'/customerprofile/cProfile/' + ${pet.cid.cid}}" type="button" class="btn btn-sm btn-primary mt-2">
+                        <i class="fas fa-user-alt"></i> Hasta Sahibi </a>
+                    <button type="button" class="btn btn-sm btn-danger mt-2 " data-bs-toggle="modal" data-bs-target="#LabResult">
+                        <i class='bx bx-test-tube'></i> Lab Sonuçlarını Görüntüle </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="card col-sm-4 mt-2">
+                <h5 class="card-title mt-2 "><b>Pet Profili</b></h5>
+                <ul  class="list-group list-group-flush">
+                    <label>Adı </label>
+                    <li class="list-group-item" th:if="${pet!= null} " th:text="${pet.pname}"></li>
+                    <label>Irk</label>
+                    <li class="list-group-item" th:if="${pet!= null} "  th:text="${pet.ptype}"></li>
+                    <label class="align-text-bottom" >Chip/Küpe Numarası</label>
+                    <li class="list-group-item" th:if="${pet!= null} " th:text="${pet.pchip}"></li>
+                    <label class="align-text-bottom" >Sahip Adı Soyadı</label>
+                    <li class="list-group-item" th:if="${pet!= null} " th:text="${pet.cid.cname} + ${pet.cid.csurname}"></li>
+
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+                        <button th:if="${pet!= null} " th:href="@{'/petprofile/cProfile/'+ ${pet.pid}}" data-bs-toggle="modal" data-bs-target="#PetAddModal"  type="button" class="btn-sm btn-warning mt-2" data-bs-dismiss="modal">Düzenle</button>
+
+                        <button  data-bs-toggle="modal" data-bs-target="#petTreatmentModal"  type="button" class="btn-sm btn-outline-primary mt-2" data-bs-dismiss="modal">Lab Sonucu/Tedavi Girişi</button>
+                        <a th:if="${pet!= null} " th:href="@{'/petprofile/cDelete/'+ ${pet.pid}} " type="button" class="btn-sm btn-danger mt-2">Sil</a>
+                    </div>
+
+
+                </ul>
+            </div>
+
+            <div class=" card col-sm-7 offset-md-1 mt-2">
+                <div class="card-title">
+                    <h5 class="card-title align-middle mt-2"><b>Geçmiş Tedavi/LabSonuçları</b></h5>
+                </div>
+                <div class="col-sm-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Başlık</th>
+                            <th scope="col">Açıklama</th>
+                            <th scope="col">Aşı</th>
+                            <th scope="col">Ürün</th>
+                            <th scope="col">Hizmet</th>
+                            <th scope="col">Tutar</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="item, iter : ${cureList}">
+                            <th th:text="${item.curid}"></th>
+                            <td th:text="${item.curtitle}"></td>
+                            <td th:text="${item.curcomment}"></td>
+                            <td th:if="${item.curvac} != null" th:text="${item.curvac.vacname}"></td>
+                            <td th:unless="${item.curvac} != null">-</td>
+                            <td th:if="${item.curpro} != null" th:text="${item.curpro.prname}"></td>
+                            <td th:unless="${item.curpro} != null">-</td>
+                            <td th:if="${item.curla} != null" th:text="${item.curla.laname}"></td>
+                            <td th:unless="${item.curla} != null">-</td>
+                            <td th:text="${item.curdebt}"></td>
+
+                            <td> <a th:href="@{'/petprofile/cureDelete/' + ${item.curid}}" class="btn btn-primary btn-sm"> Sil</a> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- TEDAVİ -->
+
+
+    <!-- Cure Add Modal Start -->
+    <form id="form_modal_send" method="post" action="/petprofile/cure">
+        <div class="modal fade " id="petTreatmentModal" tabindex="-1" aria-labelledby="petTreatmentLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl model-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="petTreatmentLabel"><i class="fas fa-capsules"></i> Pet Tedavi Sonuç</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Modal-Structure-From-Start -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="align-text-bottom">Tedavi Başlığı  </label>
+                                <input type="text" class="form-control mb-3" id="curtitle" name="curtitle" placeholder="">
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-1"> Aşı</label>
+                                <select  id="curvac" name="curvac" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="0" selected>Aşı Kullanıldıysa Seçiniz</option>
+                                    <option th:each="item, iter : ${vac}" th:value="${item.vacid}" th:text="${item.vacname}  + ' / ' + ${item.vacsales}  +' ₺' " ></option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-1"> Ürün</label>
+                                <select  id="curpro" name="curpro" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="0" selected>Ürün Kullanıldıysa Seçiniz</option>
+                                    <option th:each="item, iter : ${pro}" th:value="${item.prid}" th:text="${item.prname}  + ' / ' + ${item.prsales}  +' ₺' " ></option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom mt-1"> Hizmet</label>
+                                <select  id="curla" name="curla" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="0" selected>Hizmet Kullanıldıysa Seçiniz</option>
+                                    <option th:each="item, iter : ${la}" th:value="${item.laid}" th:text="${item.laname} + ' / ' + ${item.lamoney}  +' ₺' " ></option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <label class="align-text-bottom mt-3"> Tedavi Açıklama</label>
+                                <textarea type="text" class="form-control mb-3" id="curcomment" name="curcomment" placeholder=""> </textarea>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Modal-Structure-From-End -->
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                        <button type="submit" class="btn btn-primary">Ürünü Ekle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Cure Add Modal End -->
+
+    <!-- TEDAVİ END-->
+
+
+    <!-- PET EDİT-->
+
+    <div class="modal fade " id="PetAddModal" tabindex="-1" aria-labelledby="ProductAddModalLabel" th:object="${pet}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-xl model-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ProductAddModalLabel"> <i class='bx bxs-box' ></i> Pet Düzenle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/petprofile/uProfile" th:object="${pet}">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="mcname" class="align-baseline">Adı</label>
+                                    <input id="mcname"   name="pname" class="form-control form-control-sm mt-1" type="text"
+                                           aria-label=".form-control-sm example" th:value="${pet.pname}">
+                                    <div style="color: red" th:if="${ #fields.hasErrors('pname') }" th:errors="*{pname}" ></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="csurname" class="align-baseline mt-1">Chip/küpe Numarası </label>
+                                    <input id="csurname" name="pchip" class="form-control form-control-sm mt-1" type="number"
+                                           aria-label=".form-control-sm example" th:value="${pet.pchip}"></div>
+
+                                <div class="col-sm-6 mt-2 mb-2">
+                                    <label for="mctel" class="align-baseline mt-1">Doğum Tarihi</label>
+                                    <input id="mctel" name="pbirthday" class="form-control form-control-sm mt-1" type="date"
+                                           aria-label=".form-control-sm example" th:field="${pet.pbirthday}" >
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-primary">Düzenle</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PET EDİT END-->
+
+    <!-- Lab-->
+
+    <div class="modal fade " id="LabResult" tabindex="-1" aria-labelledby="LabResultLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-xl model-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="LabResultLabel"> <i class='bx bx-test-tube'></i> Lab Sonuçları</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-sm-12" th:each="item, iter : ${ lab } ">
+                                <ul  class="list-group list-group-flush">
+                                <li class="list-group-item" th:text="${item.ltitle}"></li>
+                                <li class="list-group-item" th:text="${item.ldate}"></li>
+                                <li class="list-group-item" th:text="${item.lcomment}"></li>
+                                <div class="card">
+                                    <img th:src="@{ '/uploads/'+ ${item.fileName} }" class="card-img-top">
+                                </div>
+                                    <a th:href="@{'/petprofile/deleteImage/'+${item.lid} }" class="btn btn-warning">Delete</a>
+                                </ul>
+                            </div>
+
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lab EDİT END-->
+
+</th:block>
+
+</body>
+</html>

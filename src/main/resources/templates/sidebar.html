@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+
+<title>Title</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{sitecss/site.css}">
+<link rel="stylesheet" th:href="@{/sitecss/sidebar.css}">
+<link rel="stylesheet" th:href="@{/boxicons-2.0.9/css/boxicons.min.css}">
+
+</head>
+
+<body id="body-pd">
+
+  <header class="header" id="header">
+    <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+    <a href="#"> <i href="#" class='bx bx-log-out nav_log_out'></i></a>
+
+  </header>
+
+  <div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+      <div> <a href="#" class="nav_logo"> <i class='bx bx-home-heart nav_logo-icon'></i> <span
+            class="nav_logo-name">BulutVet</span> </a>
+        <div class="nav_list"><a href="#" class="nav_link active">
+            <i class='bx bx-grid-alt nav_icon'></i><span class="nav_name">Dashboard</span> </a>
+
+            <p>
+              <a class="nav_link " data-bs-toggle="collapse" href="#collapseCustomer"><i class='bx bx-user nav_icon'></i>
+                Müşteriler </a>
+            </p>
+            <div class="collapse" id="collapseCustomer">
+              <a href="#" class="nav_link small"> <i class='bx bx-user-plus nav_icon'></i> <span
+                  class="nav_name "> Müşteri Ekleme </span> </a>
+            </div>
+            <div class="collapse" id="collapseCustomer">
+              <a href="#" class="nav_link small"> <i class='bx bxs-user-detail nav_icon'></i> <span
+                  class="nav_name ">Müşteri Listeleme</span> </a>
+            </div>
+
+            <a href="#" class="nav_link"> <i class='bx bx-basket nav_icon'></i><span class="nav_name">Satış</span> </a> 
+            <a href="#" class="nav_link"> <i class='bx bx-purchase-tag-alt nav_icon'></i><span class="nav_name">Alış</span> </a> 
+            <a href="#" class="nav_link"> <i class='bx bx-test-tube nav_icon'></i><span class="nav_name">Laboratuvar</span> </a> 
+            <a href="#" class="nav_link"> <i class='bx bx-dollar nav_icon'></i><span class="nav_name">Kasa İşlemleri</span> </a> 
+            <a href="#" class="nav_link"> <i class='bx bx-plus-medical nav_icon'></i><span class="nav_name">Ürün Aşı Tanım</span> </a> 
+            <a href="#" class="nav_link"> <i class='bx bxs-truck nav_icon'></i><span class="nav_name">Tedarikçiler</span> </a> 
+            <a href="#" class="nav_link"> <i class='bx bx-book nav_icon'></i><span class="nav_name">Ajandam</span> </a> 
+            <a href="#" class="nav_link"> <i class='bx bx-box nav_icon'></i><span class="nav_name">Depo</span> </a> 
+            <a href="#" class="nav_link"> <i class='bx bx-stats nav_icon'></i><span class="nav_name">Klinik İstatistikleri</span> </a> 
+            <a href="#" class="nav_link"> <i class='bx bx-brightness nav_icon'></i><span class="nav_name">Ayarlar</span> </a> 
+            <p>
+              <a class="nav_link" data-bs-toggle="collapse" href="#collapseAccount"><i class='bx bxs-user-account nav_icon'></i>
+                Hesabım </a>
+            </p>
+            <div class="collapse" id="collapseAccount">
+              <a href="#" class="nav_link "> <i class='bx bx-info-circle nav_icon'></i> <span
+                  class="nav_name small">Firma Bilgileri</span> </a>
+            </div>
+            <div class="collapse" id="collapseAccount">
+              <a href="#" class="nav_link "> <i class='bx bx-lock-open nav_icon'></i> <span
+                  class="nav_name small">Şifre Değiştir</span> </a>
+            </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+
+  <footer class="sticky-footer bg-white ">
+    <div class="container my-auto">
+      <div class="copyright text-center my-auto">
+        <hr class="bg-primary">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <a href="https://twitter.com/home" class="nav_link"> <i class='bx bxl-twitter'></i> <span
+                  class="nav_name">Twitter</span> </a>
+            </div>
+            <div class="col">
+              <a href="https://facebook.com/" class="nav_link"> <i class='bx bxl-facebook'></i> <span
+                  class="nav_name">Facebook</span> </a>
+            </div>
+            <div class="col">
+              <a href="https://instagram.com/" class="nav_link"> <i class='bx bxl-instagram'></i> <span
+                  class="nav_name">Instagram</span> </a>
+            </div>
+            <div class="col">
+              <a href="mailto:info@hotmail.com" class="nav_link"> <i class='bx bx-mail-send'></i> <span
+                  class="nav_name">Mail</span> </a>
+            </div>
+          </div>
+          <span>Veteriner Teknoloji ® markası ve logosu 556 Sayılı Markaların Korunması Hakkında KHK hükümlerine göre
+            korunmaktadır. Site içerik ve fotoğraflar izinsiz kopyalanamaz. © 2021</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+
+  <script th:src="@{js/jquery-3.6.0.min.js}"></script>
+  <script th:src="@{js/bootstrap.min.js}"></script>
+  <script th:src="@{/sitejs/sidebar.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div th:fragment="bar" class="l-navbar" id="nav-bar">
+    <nav class="nav">
+        <div> <a th:href="@{'/main'}" class="nav_logo"> <i class='bx bx-home-heart nav_logo-icon'></i> <span
+                class="nav_logo-name">VETERİM</span>
+            </a>
+            <div class="nav_list">
+
+                <a th:href="@{'/main'}"  class="nav_link"> <i class='bx bx-grid-alt nav_icon'></i><span class="nav_name">Ana Sayfa</span> </a>
+
+                <p>
+                    <a class="nav_link " data-bs-toggle="collapse" href="#collapseCustomer"><i class='bx bx-user nav_icon'></i>
+                        Müşteriler </a>
+                </p>
+                <div class="collapse" id="collapseCustomer">
+                    <a th:href="@{'/customer'}" class="nav_link small"> <i class='bx bx-user-plus nav_icon'></i> <span
+                            class="nav_name "> Müşteri Ekleme </span> </a>
+                </div>
+                <div class="collapse" id="collapseCustomer">
+                    <a th:href="@{'/customer-list/list'}" class="nav_link small"> <i class='bx bxs-user-detail nav_icon'></i> <span
+                            class="nav_name ">Müşteri Listeleme</span> </a>
+                </div>
+
+                <a th:href="@{'/sale'}"  class="nav_link"> <i class='bx bx-basket nav_icon'></i><span class="nav_name">Satış</span> </a>
+                <a th:href="@{'/buying'}"  class="nav_link"> <i class='bx bx-purchase-tag-alt nav_icon'></i><span class="nav_name">Alış</span> </a>
+                <a th:href="@{'/lab'}" class="nav_link"> <i class='bx bx-test-tube nav_icon'></i><span class="nav_name">Laboratuvar</span> </a>
+                <a th:href="@{'/case'}" class="nav_link"> <i class='bx bx-dollar nav_icon'></i><span class="nav_name">Kasa İşlemleri</span> </a>
+                <a th:href="@{'/product'}" class="nav_link"> <i class='bx bx-plus-medical nav_icon'></i><span class="nav_name">Ürün</span> </a>
+                <a th:href="@{'/vaccine'}" class="nav_link"> <i class="fas fa-syringe"></i><span class="nav_name">Aşı</span> </a>
+                <a th:href="@{'/suppliers'}" class="nav_link"> <i class='bx bxs-truck nav_icon'></i><span class="nav_name">Tedarikçiler</span> </a>
+                <a th:href="@{'/agenda'}" class="nav_link"> <i class='bx bx-book nav_icon'></i><span class="nav_name">Ajandam</span> </a>
+                <a th:href="@{'/storage'}" class="nav_link"> <i class='bx bx-box nav_icon'></i>Depo </a>
+                <a th:href="@{'/register'}" class="nav_link"> <i class="fas fa-users"></i></i>Yeni Kullanıcı</a>
+                <a th:href="@{'/passChange'}" class="nav_link"> <i class="fas fa-key"></i></i>Şifre Değiştir</a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+
+
+</body>
+</html>

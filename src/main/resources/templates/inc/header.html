@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+
+
+<header th:fragment="header" class="header" id="header">
+
+    <div class="row">
+  <div class="header_toggle col-sm-2"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+
+
+    <form class="col-sm-10" th:action="@{/customer-search/keyword}" method="get">
+        <input type="text" name="keyword" placeholder="Müşteri İsmi Arama">
+        <button class="btn btn-info btn-sm" type="submit" >Arama Yap</button>
+    </form>
+
+    </div>
+
+    <a th:href="@{'/logout'}"> <i  class='bx bx-log-out nav_log_out'></i></a>
+
+
+
+</header>
+
+</body>
+</html>

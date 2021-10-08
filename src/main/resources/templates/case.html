@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajanda</title>
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container">
+
+        <div class="row">
+            <div class="card cal-sm-6 mt-3">
+                <div class="card-title text-white">
+                    <button type="button" class="btn btn-success btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#addMoney"><i class="far fa-plus-square"></i> Kasa Para Girişi </button>
+                    <button type="button" class="btn btn-danger btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#outMoney"><i class="far fa-minus-square"></i> Kasa Para Çıkışı</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="cal-sm-6 mt-2">
+                <div class="card-sm-6">
+                    <div class="card-header bg-primary table-hover text-white">
+                        Kasa Hareketleri
+                    </div>
+                    <div class="container">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-center" scope="col">Tarih</th>
+                                <th class="text-center" scope="col">İşlem</th>
+                                <th class="text-center" scope="col">İşlemi Yapan</th>
+                                <th class="text-center" scope="col">İşlem Yapılan</th>
+                                <th class="text-center" scope="col">Açıklama</th>
+                                <th class="text-center" scope="col">İşlem Miktarı</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item, iter : ${case}">
+                                <td class="text-center" th:text="${item.cdatenow}"></td>
+                                <td class="text-center text-info" th:if="${item.cbuysell == 1}">Satış / Ekleme</td>
+                                <td class="text-center text-danger" th:if="${item.cbuysell == 2}">Alış / Çıkarma</td>
+                                <th class="text-center" th:text="${item.cname}"></th>
+                                <th class="text-center" th:text="${item.cpeople}"></th>
+                                <td class="text-center" th:text="${item.ccomment}"></td>
+                                <td class="text-center text-success" th:text="${item.cmoney} + ' ₺'"></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Hesaba Para Girişi Yap -->
+    <div class="modal fade" id="addMoney" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="/case/add" method="post" id="form_modal_send">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hesaba Para Girişi Yap</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <label for="ccomment" class="align-baseline">Açıklama</label>
+                    <textarea id="ccomment" name="ccomment" class="form-control form-control-sm mt-1 textarea" type="text"
+                              aria-label=".form-control-sm example"></textarea>
+
+                    <label for="cdatenow" class="align-baseline mt-2">İşlem Tarihi</label>
+                    <input type="date" name="cdatenow" id="cdatenow" class="form-control form-control-sm mt-1" aria-label=".form-control-sm example" />
+
+                    <label for="cmoney" class="align-baseline mt-2">Tutar</label>
+                    <input id="cmoney" name="cmoney" class="form-control form-control-sm mt-1" type="number"
+                           aria-label=".form-control-sm example">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i>Kapat</button>
+                    <button type="submit" class="btn btn-primary"><i class='bx bx-mail-send'></i>Ekle</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Hesaba Para Çıkışı Yap -->
+    <div class="modal fade" id="outMoney" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="/case/remove" method="post" id="form_modal_send">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Hesaptan Para Çıkışı Yap</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <label for="ccomment" class="align-baseline">Açıklama</label>
+                        <textarea id="ccomment" name="ccomment" class="form-control form-control-sm mt-1 textarea" type="text"
+                                  aria-label=".form-control-sm example"></textarea>
+
+                        <label for="cdatenow" class="align-baseline mt-2">İşlem Tarihi</label>
+                        <input type="date" name="cdatenow" id="cdatenow" class="form-control form-control-sm mt-1" aria-label=".form-control-sm example" />
+
+                        <label for="cmoney" class="align-baseline mt-2">Tutar</label>
+                        <input id="cmoney" name="cmoney" class="form-control form-control-sm mt-1" type="number"
+                               aria-label=".form-control-sm example">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i>Kapat</button>
+                        <button type="submit" class="btn btn-primary"><i class='bx bx-mail-send'></i>Ekle</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</th:block>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Ürün Ekle</title>
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container mt-2">
+
+        <div class="row">
+            <div class="card cal-sm-6 mt-3">
+                <div class="card-title text-white">
+                    <button type="button" class="btn btn-sm btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#ProductAddModal">
+                        <i class="fas fa-capsules"></i> Ürün Tanımla
+                    </button>
+                    <a th:href="@{'/storage'}" type="button" class="btn btn-sm btn-info mt-2">
+                        <i class="fas fa-boxes"></i> Depo Stok & Stok Hareketlerini Görüntüle </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="cal-sm-6 mt-2">
+                <div class="card">
+                    <div class="card-header bg-primary table-hover text-white">
+                        Ürünler
+                    </div>
+                    <div class="container">
+
+                        <div class="col-sm-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Ürün Id</th>
+                                    <th scope="col">Ürün Adı</th>
+                                    <th scope="col">Ürün Türü</th>
+                                    <th scope="col">Alış Fiyatı</th>
+                                    <th scope="col">Satış Fiyatı</th>
+                                    <th scope="col">Stok</th>
+                                    <th scope="col">Yönetim</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr th:each="item, iter : ${ls}">
+                                    <th th:text="${item.prid}"></th>
+                                    <td> <a th:href="@{'product-profile/' + ${item.prid}}" th:text="${item.prname}"> </a> </td>
+                                    <td th:text="${item.prtype}"></td>
+                                    <td th:text="${item.prbuying}"></td>
+                                    <td th:text="${item.prsales}"></td>
+                                    <td th:text="${item.prstock}"></td>
+                                    <td> <a th:href="@{'product/prdelete/' + ${item.prid}}" class="btn btn-danger btn-sm"><i class='bx bx-minus-circle'></i> Sil</a> </td>
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <th:block th:replace="inc/modals/prAddModal :: prAddModal"></th:block>
+
+
+</th:block>
+
+</body>
+</html>

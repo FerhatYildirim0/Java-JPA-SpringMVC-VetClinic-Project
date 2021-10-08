@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Şifre Değişimi</title>
+</head>
+<body id="body-pd">
+<!--<div class="container">-->
+<th:block layout:fragment="content" >
+
+<style>
+    .custom-margin {
+        margin-top: 20vh;
+    }
+
+
+    /* If you add background image it will look like transparent form*/
+    body {
+       /* background-image: url('');*/
+        background-repeat: no-repeat;
+        width: 100%;
+        height: auto;
+    }
+</style>
+
+<title>Login Form</title>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-6 col-md-4 justify-content-center custom-margin">
+
+            <form th:action="@{/passchanger}" method="post" class="shadow-lg p-4 text-white">
+                <h1 class="text-dark text-center">Şifre Değiştir</h1>
+                <div class="form-group mt-2">
+                    <i class="fas fa-user"></i><label for="email" class="pl-2 font-weight-bold m-lg-2">Kullanıcı Adı</label>
+                    <input type="text" name="email" id="email" class="form-control bg-transparent" placeholder="Email">
+                </div>
+
+                <div class="form-group mt-2">
+                    <i class="fas fa-key"></i><label for="password" class="pl-2 font-weight-bold m-lg-2">Eski Şifre</label>
+                    <input type="password" id="password" name="oldPass" placeholder="Eski Şifre" class="form-control bg-transparent"  />
+                </div>
+
+                <div class="form-group mt-2">
+                    <i class="fas fa-key"></i><label for="password" class="pl-2  font-weight-bold m-lg-2">Yeni Şifre</label>
+                    <input type="password" id="newPassword" name="newPass" placeholder="Yeni Şifre" class="form-control bg-transparent"  />
+                </div>
+
+                <div class="d-grid gap-2 col-12 mx-auto">
+                    <button type="submit" class="btn btn-outline-success mt-3 btn-block shadow-sm font-weight-bold">Şifre Değiştir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--</div>-->
+
+    <!-- JQuery Popper Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+
+
+    </div>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container">
+
+        <div class="row">
+            <div class="card cal-sm-6 mt-2">
+                <div class="card-title text-white">
+                    <button type="button" class="btn btn-sm btn-danger mt-2" data-bs-toggle="modal" data-bs-target="#PetAddModal">Pet Ekle</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="cal-sm-6">
+                <div class="card">
+                    <div class="card-header bg-primary table-hover text-white">
+                        Müşteri Ekle
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="/customer/add" th:object="${customer}">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="cname" class="align-baseline">Hasta Sahibi Adı</label>
+                                    <input id="cname" name="cname" class="form-control form-control-sm mt-1" type="text"
+                                           aria-label=".form-control-sm example">
+                                    <div style="color: red" th:if="${ #fields.hasErrors('cname') }" th:errors="*{cname}" ></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="csurname" class="align-baseline mt-1">Hasta Sahibi Soyadı</label>
+                                    <input id="csurname" name="csurname" class="form-control form-control-sm mt-1" type="text"
+                                           aria-label=".form-control-sm example">
+                                    <div style="color: red" th:if="${ #fields.hasErrors('csurname') }" th:errors="*{csurname}" ></div>
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="ctel" class="align-baseline mt-1">Telefon Numarası</label>
+                                    <input id="ctel" name="ctel" class="form-control form-control-sm mt-1" type="tel"
+                                           aria-label=".form-control-sm example">
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="ctel_2" class="align-baseline mt-1">Telefon Numarası 2</label>
+                                    <input id="ctel_2" name="ctel_2" class="form-control form-control-sm mt-1" type="tel"
+                                           aria-label=".form-control-sm example">
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="cmail" class="align-baseline mt-1">E-Mail</label>
+                                    <input id="cmail" name="cmail" class="form-control form-control-sm mt-1" type="email"
+                                           aria-label=".form-control-sm example">
+                                    <div style="color: red" th:if="${ #fields.hasErrors('cmail') }" th:errors="*{cmail}" ></div>
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="ctax_office" class="align-baseline mt-1">Vergi Dairesi Adı</label>
+                                    <input id="ctax_office" name="ctax_office" class="form-control form-control-sm mt-1" type="text"
+                                           aria-label=".form-control-sm example">
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="cnote" class="align-baseline mt-1">Not</label>
+                                    <input id="cnote" name="cnote" class="form-control form-control-sm mt-1" type="text"
+                                           aria-label=".form-control-sm example">
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="ccitizenship" class="align-baseline mt-1">VN/TC Numarası</label>
+                                    <input id="ccitizenship" name="ccitizenship" class="form-control form-control-sm mt-1" type="number"
+                                           aria-label=".form-control-sm example">
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="basic-addon1" class="align-baseline mt-1">İndirim Oranı</label>
+                                    <div class="input-group">
+
+                                        <span class="input-group-text" id="basic-addon1">%</span>
+                                        <input type="number" id="cdiscount" name="cdiscount" class="form-control" placeholder="İndirim Oranı"
+                                               aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="ccity" class="align-baseline mt-1">İl</label>
+                                    <input id="ccity" name="ccity" class="form-control form-control-sm mt-1" type="text"
+                                           aria-label=".form-control-sm example">
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="ctown" class="align-baseline mt-1">İlçe</label>
+                                    <input id="ctown" name="ctown" class="form-control form-control-sm mt-1" type="text"
+                                           aria-label=".form-control-sm example">
+                                </div>
+                                <div class="col-sm-6 mt-2">
+                                    <label for="caddress" class="align-baseline mt-1">Adresi</label>
+                                    <textarea id="caddress" name="caddress" class="form-control form-control-sm mt-1 textarea" type="text"
+                                              aria-label=".form-control-sm example"></textarea>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="submit" class="btn btn-primary">Müşteri Ekle</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!-- Modal -->
+    <form method="post" action="/customer/petadd" id="form_modal_send">
+        <div class="modal fade " id="PetAddModal" tabindex="-1" aria-labelledby="PetAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl model-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="PetAddModalLabel">Hasta Ekleme</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Modal-Structure-From-Start -->
+
+                        <div class="row">
+                            <div class="col-sm-4 input-group mb-3">
+                                <button class="btn btn-outline-secondary" type="button">Müşteri: </button>
+                                <select name="cid" class="form-select" id="inputGroupSelect03" aria-label="Example select with button addon">
+                                    <option  th:each="item, iter : ${ls}" th:value="${item.cid}" th:text="${item.cname}"></option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom">Hasta Adı </label>
+                                <input type="text" class="form-control mb-3" id="pname" name="pname" placeholder="">
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom">Çip Numarası</label>
+                                <input type="number" class="form-control mb-3" id="pchip" name="pchip" placeholder="">
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom">Karne / Küpe Numarası</label>
+                                <input type="text" class="form-control mb-3" id="pearnumber" name="pearnumber" placeholder="">
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="align-text-bottom">Doğum Tarihi</label>
+                                <input type="date" class="form-control mb-3" id="pbirthday" name="pbirthday" placeholder="">
+                            </div>
+                            <div class="col-sm-4">
+                                <label class=" align-text-bottom">Tür</label>
+                                <select name="ptype" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="1">BÜYÜKBAŞ</option>
+                                    <option value="2">KEDİ</option>
+                                    <option value="3">KÖPEK</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class=" align-text-bottom">Kısır</label>
+                                <select name="pspay" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="1">Kısırlaştırılmış</option>
+                                    <option value="2">Kısırlaştırılmamış</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class=" align-text-bottom">Irkı</label>
+                                <select name="prace" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="1">AKBAŞ</option>
+                                    <option value="2">GOLDEN</option>
+                                    <option value="2">KARABAŞ</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class=" align-text-bottom">Rengi</label>
+                                <select name="pcolor" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="1">3 Renkli</option>
+                                    <option value="2">Bal Rengi</option>
+                                    <option value="2">Siyah</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class=" align-text-bottom">Cinsiyeti</label>
+                                <select name="pgender" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="1">Erkek</option>
+                                    <option value="2">Dişi</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Modal-Structure-From-End -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">KAPAT</button>
+                        <button type="submit" class="btn btn-primary">KAYDET</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal Biter -->
+
+
+
+
+
+
+
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container">
+
+        <div class="col-md-12">
+            <div class="row ">
+                <div class="col-xl-3 col-lg-6 mt-2">
+                    <div class="card l-bg-cherry">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large" style="font-size: 120px;"  ><i class="fas fa-vials"></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0">Toplam Laboratuvar Tanısı</h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 class="d-flex align-items-center mb-0" th:text="${totallab}">
+
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 mt-2">
+                    <div class="card l-bg-blue-dark">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large" style="font-size: 120px;"><i class="fas fa-users"></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0">Günlük Yeni Müşteri     </h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 th:text="${customerCount}" class="d-flex align-items-center mb-0">
+
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 mt-2">
+                    <div class="card l-bg-green-dark">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large" style="font-size: 120px;"><i class="fas fa-lira-sign"></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0">Günlük Ciro               </h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 th:text="${money}" class="d-flex align-items-center mb-0">
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 mt-2">
+                    <div class="card l-bg-orange-dark">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large" style="font-size: 120px;"><i class="fas fa-truck-loading"></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0">Toplam Stok Değeri         </h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 th:text="${storage}+' ₺'" class="d-flex align-items-center mb-0">
+
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 mt-2">
+                    <div class="row">
+                        <div class="card-header bg-primary table-hover text-white">
+                            Son Randevularım
+                        </div>
+                        <div class="card col-sm-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">Başlık</th>
+                                    <th class="text-center" scope="col">Başlama</th>
+                                    <th class="text-center" scope="col">Bitirme</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr th:each="item, iter : ${scheduleCalendars}">
+                                    <td class="text-center" th:text="${item.title}"></td>
+                                    <td class="text-center" th:text="${item.start}"></td>
+                                    <td class="text-center" th:text="${item.end}"></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card l-bg-cyan">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large" style="font-size: 120px;"><i class="fas fa-syringe"></i></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0">Aktif Aşı</h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 th:text="${totalVaccine}" class="d-flex align-items-center mb-0">
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card l-bg-green">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large" style="font-size: 120px;"><i class="fas fa-boxes"></i></div>
+                            <div class="mb-4">
+                                <h5 class="card-title mb-0">Aktif Ürün</h5>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h2 th:text="${totalProduct}" class="d-flex align-items-center mb-0">
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+</th:block>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="main-card mt-5 card mainCart mt-2">
+        <div class="card-header bg-primary table-hover text-white cardHeader">Müşteri Listesi</div>
+
+        <form th:action="@{/customer-search/keyword}" method="get" class="mt-2 ml-2">
+            <input type="text" name="keyword">
+            <button class="btn btn-info btn-sm text-end" type="submit" placeholder="Müşteri İsmi Arama">Ara</button>
+        </form>
+
+        <div class="row mt-3" style="padding-right: 15px; padding-left: 15px;">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"></div>
+
+
+            <div class="col-sm-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Müşteri Id</th>
+                        <th scope="col">Adı</th>
+                        <th scope="col">Soyadı</th>
+                        <th scope="col">Telefon No</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Sil</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="item, iter : ${listProducts}">
+                        <th th:text="${item.cid}"></th>
+                        <td> <a th:href="@{'/customerprofile/cProfile/'+ ${item.cid}}" th:text="${item.cname}"> </a> </td>
+                        <td th:text="${item.csurname}"></td>
+                        <td th:text="${item.ctel}"></td>
+                        <td th:text="${item.cmail}"></td>
+                        <td> <a th:href="@{'customer-list/cDelete/' + ${item.cid}}" class="btn btn-danger btn-sm">Müşteri Sil</a> </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+                <nav aria-label="Page navigation example ">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+</th:block>
+
+</body>
+</html>

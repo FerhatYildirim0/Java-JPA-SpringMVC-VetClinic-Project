@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+  <meta charset="UTF-8">
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+  <div class="main-card mt-5 card mainCart ">
+    <div class="card-header bg-primary table-hover text-white cardHeader mt-1">Müşteri Listesi</div>
+    <!--<form th:action="@{/customer-list/list/keyword}" method="get">
+      <input type="text" name="keyword" >
+      <button type="submit">btn</button>
+    </form>-->
+
+    <div class="row mt-3" style="padding-right: 15px; padding-left: 15px;">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-3"></div>
+      <div class="col-sm-3"></div>
+
+
+      <div class="col-sm-12">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Profile Git</th>
+            <th scope="col">Adı</th>
+            <th scope="col">Soyadı</th>
+            <th scope="col">Telefon No</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Sil</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <tr th:each="item, iter : ${sCust}">
+            <th> <i class="far fa-id-card"></i> <a th:href="@{'/customerprofile/cProfile/'+ ${item.cid}}" th:text="${item.cid}" > </a></th>
+            <td th:text="${item.cname}"></td>
+            <td th:text="${item.csurname}"></td>
+            <td th:text="${item.ctel}"></td>
+            <td th:text="${item.cmail}"></td>
+            <td> <a th:href="@{'/customerprofile/cDelete/' + ${item.cid}}" class="btn btn-primary btn-sm">Müşteri Sil</a> </td>
+          </tr>
+
+          </tbody>
+
+        </table>
+        <nav aria-label="Page navigation example ">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li th:each="i:${#numbers.sequence(0,sCust.size()/5)}" class="page-item"><a class="page-link"  th:href="@{'/customer-list/list/'+${i}}" th:text="${i}">1</a></li>
+            <!-- <li class="page-item"><a class="page-link"  th:href="@{'/customer-list/list/'+ 1}">2</a></li>
+             <li class="page-item"><a class="page-link"  th:href="@{'/customer-list/list/'+ 2}">3</a></li>
+             <li class="page-item"><a class="page-link"  th:href="@{'/customer-list/list/'+ 4}">4</a></li>-->
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+</th:block>
+
+</body>
+</html>

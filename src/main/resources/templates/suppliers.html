@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Ürün Profil</title>
+
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content" >
+
+    <div class="container mt-2">
+
+        <div class="row">
+            <div class="card cal-sm-6 mt-2">
+                <div class="card-title text-white">
+                    <a th:href="@{'/product'}" type="button" class="btn btn-sm btn-primary mt-2">
+                        <i class="fas fa-list-ul"></i> Tüm Aşılar Listesi </a>
+                    <button type="button" class="btn btn-sm btn-danger mt-2 " data-bs-toggle="modal" data-bs-target="#SupAdd">
+                        <i class="fas fa-truck-moving"></i> Yeni Tedarikçi Ekle </button>
+                    <a th:href="@{'/storage'}" type="button" class="btn btn-sm btn-info mt-2">
+                        <i class="fas fa-boxes"></i> Depo Stok & Stok Hareketlerini Görüntüle </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class=" col-sm-12">
+                <div class="row">
+                    <div class="card-header bg-primary table-hover text-white">
+                        Tedarikçi Listesi
+                    </div>
+                    <div class="card col-sm-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="text-center" scope="col">Id</th>
+                                <th class="text-center" scope="col">Adı</th>
+                                <th class="text-center" scope="col">Mail</th>
+                                <th class="text-center" scope="col">Tel</th>
+                                <th class="text-center" scope="col">Borç</th>
+                                <th class="text-center" scope="col">Aktif</th>
+                                <th class="text-center" scope="col">Yönetim</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item, iter : ${listSuppliers}">
+                                <td class="text-center" th:text="${item.suid}"></td>
+                                <td class="text-center"> <a th:href="@{'suppliers-profile/' + ${item.suid}}" th:text="${item.suname}"></a></td>
+                                <th class="text-center" th:text="${item.sumail}"></th>
+                                <th class="text-center" th:text="${item.sutel}"></th>
+                                <td class="text-center" th:text="${item.sudebt}"></td>
+                                <td class="text-center" th:text="${item.suactive}"></td>
+                                <td class="text-center"> <a th:href="@{'suppliers/delete/' + ${item.suid}}" class="btn btn-danger btn-sm"><i class='bx bx-minus-circle'></i> Sil</a>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supplier Add Modal -->
+    <form  method="post" action="/suppliers/add"  id="form_modal_send">
+        <div class="modal fade" id="SupAdd" tabindex="-1" aria-labelledby="SupAddLabel" aria-hidden="true">
+            <div class="modal-dialog model-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="SupAddLabel">Tedarikçi Ekle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Modal-Structure-From-Start -->
+
+                        <div class="row">
+
+                            <div>
+                                <label for="suname" class="align-baseline mt-1">İsim</label>
+                                <input id="suname" name="suname" class="form-control form-control-sm mt-1 textarea" type="text"
+                                       aria-label=".form-control-sm example"></input>
+                            </div>
+
+                            <div class="mt-2">
+                                <label for="sumail" class="align-baseline mt-1">Mail</label>
+                                <input id="sumail" name="sumail" class="form-control form-control-sm mt-1 textarea" type="email"
+                                       aria-label=".form-control-sm example"></input>
+                            </div>
+
+                            <div class="mt-2">
+                                <label for="sutel" class="align-baseline mt-1">Tel No</label>
+                                <input id="sutel" name="sutel" class="form-control form-control-sm mt-1 textarea" type="text"
+                                       aria-label=".form-control-sm example"></input>
+                            </div>
+
+                            <div class="mt-2">
+                                <label for="sudebt" class="align-baseline mt-1">Borç</label>
+                                <input id="sudebt" name="sudebt" value="0" class="form-control form-control-sm mt-1 textarea" type="number"
+                                       aria-label=".form-control-sm example"></input>
+                            </div>
+
+                            <div class="mt-2">
+                                <label for="suactive" class=" align-align-baseline mt-1">Aktif</label>
+                                <select id="suactive" name="suactive" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option value="1">Aktif</option>
+                                    <option value="2">İnaktif</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Modal-Structure-From-End -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">KAPAT</button>
+                        <button type="submit" class="btn btn-success">EKLE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--Supplier Add Modal End-->
+
+
+</th:block>
+
+</body>
+</html>

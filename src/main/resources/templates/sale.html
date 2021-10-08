@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/inc/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Satış</title>
+</head>
+<body id="body-pd">
+
+<th:block layout:fragment="content">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#kayitliMusteriSatis">
+        Kayıtlı Müşteriye Satış
+    </button>
+
+    <div class="card mt-2">
+        <div class="card-header bg-primary table-hover text-white ">
+            Satışlar
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th colspan="1" scope="col">İşlemler</th>
+                            <th scope="col">SID</th>
+                            <th scope="col">Tarih <a href="#" class="button"><i class='bx bxs-chevron-up'></i></a> <a
+                                    href="#" class="button"><i class='bx bxs-chevron-down'></i></a></th>
+                            <th scope="col">Müşteri Adı</th>
+                            <th scope="col">Ödeme Yöntemi</th>
+                            <th scope="col">Brüt</th>
+                            <th scope="col">Net</th>
+                            <th scope="col">KDV</th>
+                            <th scope="col">İndirim</th>
+                            <th scope="col">Tutar</th>
+                            <th scope="col">Note</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableRow">
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <label class="mt-2"><b>Fatura No:</b></label>
+                    <div class="col-sm-2">
+                        <div class="col-sm-11 offset-md-1">
+                            <input name="fatura_No" id="fatura_No" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <button onclick="statusChanger()" id="satisiTamamla" class="btn-sm btn-success mt-2">Satışı
+                        Tamamla
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="kayitliMusteriSatis" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Satış</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/sale/nsert" method="post" id="sale">
+
+                        <div class="mt-1">
+                            <label class="align-text-bottom"> Müşteri Seç</label>
+                            <select id="cuname" name="cuname" class="form-select form-select-sm"
+                                    aria-label=".form-select-sm example">
+                                <option th:each="item, iter : ${customerList}" th:value="${item.cname}"
+                                        th:text="${item.cname}"></option>
+                            </select>
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="align-text-bottom mt-2"> Ürün / Aşı</label>
+                            <select id="pname" name="pname" class="form-select form-select-sm"
+                                    aria-label=".form-select-sm example">
+                                <option th:each="item, iter : ${storageList}" th:if="${item.stvac} != null"
+                                        th:value="${item.stvac.vacid}" th:text="${item.stvac.vacname}"></option>
+                                <option th:each="item, iter : ${storageList}" th:if="${item.stpro} != null"
+                                        th:value="${item.stpro.prid}" th:text="${item.stpro.prname}"></option>
+                            </select>
+                        </div>
+
+
+                        <div class="mb-3 mt-2">
+                            <label class="align-text-bottom">Satış Notunu Giriniz</label>
+                            <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-2">
+                                <div class="col-sm-11 offset-md-1">
+                                    <label for="productPrice" class="form-label">Fiyatı</label>
+                                    <input name="productPrice" id="productPrice" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="col-sm-11 offset-md-1">
+                                    <label for="productAmount" class="form-label">Miktar</label>
+                                    <input name="productAmount" id="productAmount" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="col-sm-11 offset-md-1">
+                                    <label class="form-label">Birim</label>
+                                    <select class="form-select form-select-sm mt-1" name="protype" id="protype"
+                                            aria-label=".form-select-sm example">
+                                        <option selected>Seçiniz</option>
+                                        <option value="1">Mililitre</option>
+                                        <option value="2">g</option>
+                                        <option value="3">Kutu</option>
+                                        <option value="4">Adet</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="col-sm-11 offset-md-1">
+                                    <label class="form-label">KDV</label>
+                                    <select class="form-select form-select-sm mt-1" name="tax_type" id="tax_type"
+                                            aria-label=".form-select-sm example">
+                                        <option selected>%</option>
+                                        <option value="0">Dahil</option>
+                                        <option value="1">%1</option>
+                                        <option value="2">%8</option>
+                                        <option value="3">%18</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="col-sm-11 offset-md-1">
+                                    <label class="form-label">İndirim</label>
+                                    <input type="number" class="form-control" name="pdiscount" id="pdiscount"
+                                           placeholder="%">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="col-sm-11 offset-md-1">
+                                    <label class="form-label">Ödeme Yöntemi</label>
+                                    <select class="form-select form-select-sm mt-1" name="purType" id="purType"
+                                            aria-label=".form-select-sm example">
+                                        <option selected></option>
+                                        <option value="1">Nakit</option>
+                                        <option value="2">Kredi Kartı</option>
+                                        <option value="3">Banka Havalesi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="col-sm-11 offset-md-1">
+                                    <label class="form-label">İşlem</label>
+                                    <button onclick="fncReset()" type="button" class="btn btn-info btn-sm mt-1">Temizle
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-10">
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex mt-2 justify-content-md-end">
+                                <button type="button" onclick="fncReset()" class="btn-sm btn-danger mt-2"
+                                        data-bs-dismiss="modal">
+                                    <i class="fa fa-align-right" aria-hidden="true"></i>Kapat
+                                </button>
+                                <button type="submit" data-bs-dismiss="modal" class="btn-sm btn-success mt-2">Kaydet
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/sitejs/sale.js}"></script>
+
+</th:block>
+</body>
+</html>
